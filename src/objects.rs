@@ -113,6 +113,30 @@ impl OsmId {
     }
 }
 
+/// Wrapper used for `StoreObjs` trait.
+pub enum OsmObjWrapper<'a> {
+    /// ref
+    Ref(&'a OsmObj),
+    /// value
+    Value(OsmObj),
+}
+impl<'a> OsmObjWrapper<'a> {
+    /// Return a reference for both kind of variants.
+    pub fn get(&self) -> &OsmObj {
+        match *self {
+            OsmObjWrapper::Ref(x) => x,
+            OsmObjWrapper::Value(ref x) => &x,
+        }
+    }
+}
+impl<'a> Deref for OsmObjWrapper<'a> {
+    type Target = OsmObj;
+
+    fn deref(&self) -> &Self::Target {
+        self.get()
+    }
+}
+
 /// An OpenStreetMap object.
 #[derive(Debug, PartialEq, PartialOrd, Clone, Serialize, Deserialize)]
 pub enum OsmObj {
@@ -122,6 +146,11 @@ pub enum OsmObj {
     Way(Way),
     /// A relation
     Relation(Relation),
+}
+impl<'a> AsRef<OsmObj> for &'a OsmObj {
+    fn as_ref(&self) -> &OsmObj {
+        *self
+    }
 }
 impl OsmObj {
     /// Returns the tags of the object.
