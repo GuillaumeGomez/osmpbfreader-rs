@@ -25,9 +25,13 @@ impl Tags {
     pub fn new() -> Tags {
         Tags(TagsImpl::new())
     }
-    /// Returns if contains the tag `(key, value)`.
-    pub fn contains(&self, key: &str, value: &str) -> bool {
-        self.0.get(key).map_or(false, |v| v.as_str() == value)
+    /// Returns the key associated value or `None` if there is no such tag.
+    pub fn get(&self, key: &str) -> Option<&str> {
+        self.0.get(key).map(|v| v.as_str())
+    }
+    /// Returns `true` if contains a tag with the given `key`.
+    pub fn contains(&self, key: &str) -> bool {
+        self.0.get(key).is_some()
     }
 }
 impl Deref for Tags {
