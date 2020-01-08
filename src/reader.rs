@@ -57,7 +57,7 @@ impl<R: io::Read> OsmPbfReader<R> {
 
     /// Returns an iterator on the OsmObj of the pbf file.
     ///
-    /// #Example
+    /// # Example
     ///
     /// ```
     /// let mut pbf = osmpbfreader::OsmPbfReader::new(std::io::empty());
@@ -75,7 +75,7 @@ impl<R: io::Read> OsmPbfReader<R> {
     /// CPU usage are guaranteed to be bounded even if the caller stop
     /// consuming items.
     ///
-    /// #Example
+    /// # Example
     ///
     /// ```
     /// let mut pbf = osmpbfreader::OsmPbfReader::new(std::io::empty());
@@ -161,7 +161,7 @@ impl<R: io::Read> OsmPbfReader<R> {
     /// ```
     /// fn is_admin(obj: &osmpbfreader::OsmObj) -> bool {
     ///     // get relations with tags[boundary] == administrative
-    ///     obj.is_relation() && obj.tags().contains("boundary", "administrative")
+    ///     obj.is_relation() && obj.tags().get("boundary") == Some("administrative")
     /// }
     ///
     /// let mut pbf = osmpbfreader::OsmPbfReader::new(std::io::Cursor::new([]));
